@@ -1,0 +1,56 @@
+[package]
+name = "binder-llm"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82"
+authors = ["DPK Platform Team"]
+license = "MIT"
+description = "Canonical LLM abstraction layer for the Binder platform"
+repository = "https://github.com/dpkimball/binder-llm"
+readme = "README.md"
+# Private Kellnr registry only — never crates.io.
+publish = ["dpk"]
+
+[features]
+default = ["ollama"]
+ollama = []
+openai = []
+anthropic = []
+xai = []
+gemini = []
+all-providers = ["ollama", "openai", "anthropic", "xai", "gemini"]
+
+[dependencies]
+async-trait = "0.1"
+bytes = "1"
+futures = "0.3"
+reqwest = { version = "0.12", default-features = false, features = ["json", "stream", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "rt", "time"] }
+tracing = "0.1"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+wiremock = "0.6"
+
+[[test]]
+name = "openai_provider"
+path = "tests/openai_provider.rs"
+required-features = ["openai"]
+
+[[test]]
+name = "anthropic_provider"
+path = "tests/anthropic_provider.rs"
+required-features = ["anthropic"]
+
+[[test]]
+name = "xai_provider"
+path = "tests/xai_provider.rs"
+required-features = ["xai"]
+
+[[test]]
+name = "gemini_provider"
+path = "tests/gemini_provider.rs"
+required-features = ["gemini"]
