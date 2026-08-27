@@ -1,0 +1,7 @@
+[project]
+name = "binder-llm"
+language = "rust"
+
+[skip]
+image = true
+deploy = true
