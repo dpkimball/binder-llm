@@ -4,7 +4,7 @@ Guidance for agents working in `binder-llm`.
 
 ## What this crate is
 
-Infrastructure-only LLM transport for Binder. The rest of the ecosystem must depend on `LlmClient` and provider-neutral types. Do not add prompts, agents, RAG, MCP, or Binder domain logic here.
+Infrastructure-only LLM transport for Binder. The rest of the ecosystem must depend on `LlmClient` and provider-neutral types. Do not add prompts, agents, RAG, MCP, Binder domain logic, bindb queries, or repository discovery here. Architectural context is supplied by binder-ai.
 
 ## Layout
 

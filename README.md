@@ -6,6 +6,8 @@ Canonical LLM abstraction for the Binder platform.
 
 No application, crate, plugin, or service should call OpenAI, Anthropic, Ollama, xAI, Gemini, or any future provider directly. All LLM traffic goes through `binder-llm`.
 
+This crate is the replaceable **reasoning engine**: it runs model inference on **supplied** messages. It does not discover repositories, query bindb, own prompts, or orchestrate workflows. Those belong to bindb (facts) and binder-ai (orchestration). See binder-ai `docs/specs/responsibilities.md`.
+
 This crate is infrastructure only: no prompts, no Binder business logic, no agents, no RAG, no tool execution.
 
 ## Role
