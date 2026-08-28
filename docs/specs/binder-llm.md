@@ -1,10 +1,13 @@
 # binder-llm
 
 github_issue: https://github.com/dpkimball/binder-llm/issues/1
+github_issue_boundary: https://github.com/dpkimball/binder-llm/issues/3
 
 Provider-agnostic LLM infrastructure crate for Binder.
 
 Applications, crates, plugins, and services must not call OpenAI, Anthropic, Ollama, xAI, Gemini, or future providers directly. All LLM traffic flows through `LlmClient`.
+
+In the Binder architecture this crate is the replaceable **reasoning engine**. It executes inference on messages binder-ai already curated. It does not walk source trees, query bindb, or own workflow. Canonical split: binder-ai `docs/specs/responsibilities.md` (issue dpkimball/binder-ai#14).
 
 ## In scope
 

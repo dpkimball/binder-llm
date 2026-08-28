@@ -1,10 +1,13 @@
 # binder-llm as-built
 
-`binder-llm` is a Rust library. `LlmClient` is the only type applications should construct. Providers implement `LlmProvider` behind Cargo features.
+`binder-llm` is a Rust library. **binder-ai** constructs [`LlmClient`]. Applications do not call providers or this crate directly.
+
+`LlmClient` is the swap point for the reasoning engine. It runs inference on supplied messages. It does not query bindb or walk repositories.
 
 ```mermaid
 flowchart LR
-  app[Binder apps / plugins / services]
+  apps[Binder applications]
+  ai[binder-ai orchestration]
   client[LlmClient]
   trait[LlmProvider]
   ollama[Ollama]
@@ -13,7 +16,7 @@ flowchart LR
   xai[xAI chat completions]
   gemini[Gemini generateContent]
 
-  app --> client --> trait
+  apps --> ai --> client --> trait
   trait --> ollama
   trait --> openai
   trait --> anthropic
