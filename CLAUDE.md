@@ -8,7 +8,7 @@ Infrastructure-only LLM transport for Binder. The rest of the ecosystem must dep
 
 ## Layout
 
-```
+```text
 src/
   client.rs, config.rs, provider.rs   # LlmClient + LlmProvider
   message.rs, request.rs, response.rs, stream.rs, tool.rs

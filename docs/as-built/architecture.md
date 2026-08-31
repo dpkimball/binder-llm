@@ -1,3 +1,9 @@
+---
+title: binder-llm as-built
+description: As-built architecture of the binder-llm crate, describing LlmClient, providers, and the data flow from applications to inference.
+category: architecture
+---
+
 # binder-llm as-built
 
 `binder-llm` is a Rust library. **binder-ai** constructs [`LlmClient`]. Applications do not call providers or this crate directly.
