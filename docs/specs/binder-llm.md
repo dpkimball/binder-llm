@@ -1,3 +1,9 @@
+---
+title: binder-llm
+description: Specification for the provider-agnostic LLM infrastructure crate for Binder, defining scope, swap contract, and boundaries.
+category: specs
+---
+
 # binder-llm
 
 github_issue: https://github.com/dpkimball/binder-llm/issues/1
