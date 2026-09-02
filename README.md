@@ -66,9 +66,11 @@ Consumers should depend on `LlmClient` and the provider-neutral request/response
 
 ## Develop
 
+Sibling checkout with shared build tooling (optional):
+
 ```text
-dpk-workspace/
-  dpk-build/
+workspace/
+  dpk-build/   # or any BUILD_ROOT that provides Makefile.common
   binder-llm/
 ```
 
@@ -76,10 +78,11 @@ dpk-workspace/
 cargo test
 cargo test --all-features
 cargo clippy --all-targets --all-features -- -D warnings
-make b   # lint + test; publishes to DEV Kellnr when not CI
+make b   # lint + test; publishes to private Kellnr when configured
 ```
 
-Private Kellnr registry only (`publish = ["dpk"]`). Never crates.io.
+**Embed path:** private Kellnr (`publish = ["dpk"]`) — not crates.io.  
+**Public binary path:** tag `v*` → [`binder-llm-releases`](https://github.com/dpkimball/binder-llm-releases). See [`docs/specs/private-source-public-binary.md`](docs/specs/private-source-public-binary.md).
 
 ## Out of scope
 

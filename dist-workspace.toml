@@ -1,0 +1,13 @@
+[workspace]
+members = ["cargo:."]
+
+# Config for 'dist'
+[dist]
+cargo-dist-version = "0.32.0"
+ci = "github"
+installers = []
+targets = ["aarch64-apple-darwin", "x86_64-unknown-linux-gnu"]
+github-releases-repo = "dpkimball/binder-llm-releases"
+include = ["packaging/LICENSE.txt", "packaging/README.txt"]
+source-tarball = false
+pr-run-mode = "skip"

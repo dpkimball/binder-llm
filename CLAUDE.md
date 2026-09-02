@@ -34,4 +34,5 @@ Default feature is `ollama` only. CI clippy uses `--all-features`.
 
 ## Publish
 
-Private Kellnr (`CARGO_REGISTRY=dpk`). `env.sh` sets `PUBLISH_CRATE=true` for local `make b`.
+- **Crate (embed):** private Kellnr (`CARGO_REGISTRY=dpk`). `env.sh` sets `PUBLISH_CRATE=true` for local `make b`.
+- **Public binary:** cargo-dist → `dpkimball/binder-llm-releases` (see `docs/specs/private-source-public-binary.md`).

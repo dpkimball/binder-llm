@@ -3,13 +3,19 @@ name = "binder-llm"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.82"
-authors = ["DPK Platform Team"]
+authors = ["Binder contributors"]
 license = "MIT"
 description = "Canonical LLM abstraction layer for the Binder platform"
 repository = "https://github.com/dpkimball/binder-llm"
+homepage = "https://github.com/dpkimball/binder-llm-releases"
 readme = "README.md"
 # Private Kellnr registry only — never crates.io.
+# Public consumers use the binder-llm-releases binary channel (see docs/specs).
 publish = ["dpk"]
+
+[[bin]]
+name = "binder-llm"
+path = "src/bin/binder_llm.rs"
 
 [features]
 default = ["ollama"]
@@ -54,3 +60,8 @@ required-features = ["xai"]
 name = "gemini_provider"
 path = "tests/gemini_provider.rs"
 required-features = ["gemini"]
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
