@@ -52,6 +52,14 @@ On push of tag `v*`, [dist](https://github.com/axodotdev/cargo-dist) runs `.gith
 3. Actions secret **`GH_RELEASES_TOKEN`** on private `dpkimball/binder-llm`
 4. Tag matching `Cargo.toml` version
 
+Public install docs must match cargo-dist naming: `binder-llm-<rust-target-triple>.tar.xz`, per-archive `*.tar.xz.sha256`, and `sha256.sum`.
+
+### cargo-dist announcement URL drift
+
+`github-releases-repo` uploads to the public repo, but cargo-dist still embeds **private** `dpkimball/binder-llm` download URLs in the release body and `dist-manifest.json` hosting block (upstream: [axodotdev/cargo-dist#2252](https://github.com/axodotdev/cargo-dist/issues/2252)).
+
+Mitigation: `.github/workflows/fix-binder-llm-releases-announcement.yml` rewrites those URLs after a successful `Release` (requires `GH_RELEASES_TOKEN`).
+
 ## Out of scope
 
 Open-sourcing the private repo; expanding CLI into a full chat client; changing Kellnr publish for DPK embeds.

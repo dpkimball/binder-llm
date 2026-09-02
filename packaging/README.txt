@@ -10,8 +10,9 @@ and is not included. Applications should embed the Rust crate for inference.
 Installation
 ------------
 
-1. Verify the archive against checksums from the GitHub Release.
-2. Extract this archive.
+1. Verify the archive against the matching `*.tar.xz.sha256` file from the
+   GitHub Release (or use the release’s `sha256.sum`).
+2. Extract this archive (`tar -xJf …` for `.tar.xz`).
 3. Place `binder-llm` (or `binder-llm.exe`) on your PATH.
 
 Verify
@@ -19,6 +20,9 @@ Verify
 
     binder-llm --version
     binder-llm --help
+
+Phase 1 of the public binary supports only `--version` and `--help`.
+It does not run inference. Embed the private Rust crate for LLM transport.
 
 License
 -------
