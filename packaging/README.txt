@@ -4,8 +4,14 @@ binder-llm
 Official compiled release of binder-llm.
 
 binder-llm is a provider-agnostic LLM transport library. This archive contains
-the public executable for install/verify. Source code is privately maintained
-and is not included. Applications should embed the Rust crate for inference.
+the public executable for install/verify only. Source is privately maintained.
+
+IMPORTANT
+---------
+
+This binary does NOT run inference (--version / --help only).
+Applications embed the private Rust crate (Kellnr), or use binder-ai-plan from
+https://github.com/dpkimball/binder-ai-releases
 
 Installation
 ------------
@@ -21,16 +27,17 @@ Verify
     binder-llm --version
     binder-llm --help
 
-Phase 1 of the public binary supports only `--version` and `--help`.
-It does not run inference. Embed the private Rust crate for LLM transport.
+Docs
+----
+
+https://github.com/dpkimball/binder-llm-releases
 
 License
 -------
 
-See LICENSE.txt in this archive. This is proprietary binary distribution,
-not open-source software.
+See LICENSE.txt in this archive. Proprietary binary distribution — not OSS.
 
 Support
 -------
 
-See https://github.com/dpkimball/binder-llm-releases
+https://github.com/dpkimball/binder-llm-releases
