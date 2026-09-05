@@ -10,7 +10,7 @@ IMPORTANT
 ---------
 
 This binary does NOT run inference (--version / --help only).
-Applications embed the private Rust crate (Kellnr), or use binder-ai-plan from
+Applications embed the private Rust crate, or use binder-ai-plan from
 https://github.com/dpkimball/binder-ai-releases
 
 Installation
