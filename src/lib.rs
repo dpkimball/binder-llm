@@ -23,7 +23,7 @@ pub mod providers;
 pub use client::LlmClient;
 pub use config::{LlmClientBuilder, LlmConfig, RetryPolicy};
 pub use error::{LlmError, Result};
-pub use message::{ChatMessage, Metadata, Role};
+pub use message::{ChatImage, ChatMessage, Metadata, Role};
 pub use metrics::LlmCallMetrics;
 pub use mock::MockProvider;
 pub use model::{ModelInfo, Provider, ProviderModel};

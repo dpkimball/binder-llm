@@ -28,6 +28,7 @@ all-providers = ["ollama", "openai", "anthropic", "xai", "gemini"]
 
 [dependencies]
 async-trait = "0.1"
+base64 = "0.22"
 bytes = "1"
 futures = "0.3"
 reqwest = { version = "0.12", default-features = false, features = ["json", "stream", "rustls-tls"] }

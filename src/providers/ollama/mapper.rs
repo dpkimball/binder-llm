@@ -1,3 +1,4 @@
+use base64::Engine;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
@@ -67,6 +68,15 @@ pub fn generate_body(request: &ChatRequest, default_model: &str) -> Result<Value
         "prompt": prompt,
         "stream": request.stream,
     });
+    let images: Vec<Value> = request
+        .messages
+        .iter()
+        .flat_map(|message| message.images())
+        .map(|image| Value::String(base64::engine::general_purpose::STANDARD.encode(&image.bytes)))
+        .collect();
+    if !images.is_empty() {
+        body["images"] = Value::Array(images);
+    }
     if let Some(system) = system {
         body["system"] = Value::String(system);
     }
@@ -117,7 +127,24 @@ fn map_messages(messages: &[ChatMessage]) -> Result<Vec<Value>> {
 fn map_message(message: &ChatMessage) -> Result<Value> {
     Ok(match message {
         ChatMessage::System { content, .. } => json!({"role": "system", "content": content}),
-        ChatMessage::User { content, .. } => json!({"role": "user", "content": content}),
+        ChatMessage::User {
+            content, images, ..
+        } => {
+            let mut value = json!({"role": "user", "content": content});
+            if !images.is_empty() {
+                value["images"] = Value::Array(
+                    images
+                        .iter()
+                        .map(|image| {
+                            Value::String(
+                                base64::engine::general_purpose::STANDARD.encode(&image.bytes),
+                            )
+                        })
+                        .collect(),
+                );
+            }
+            value
+        }
         ChatMessage::Assistant {
             content,
             tool_calls,
@@ -308,6 +335,7 @@ pub struct EmbedApiResponse {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::message::ChatImage;
     use crate::tool::ToolDefinition;
 
     #[test]
@@ -336,5 +364,24 @@ mod tests {
         let req = ChatRequest::new(vec![ChatMessage::user("hi")]).with_json_mode(true);
         let body = chat_body(&req, "qwen").unwrap();
         assert_eq!(body["format"], "json");
+    }
+
+    #[test]
+    fn user_image_is_base64_on_the_generate_body() {
+        let png = vec![0x89, 0x50, 0x4e, 0x47];
+        let req = ChatRequest::new(vec![ChatMessage::user_with_images(
+            "Is this a company logo?",
+            vec![ChatImage {
+                media_type: "image/png".into(),
+                bytes: png.clone(),
+            }],
+        )]);
+        assert!(uses_generate(&req));
+        let body = generate_body(&req, "moondream").unwrap();
+        let encoded = body["images"][0].as_str().unwrap();
+        assert_eq!(
+            encoded,
+            base64::engine::general_purpose::STANDARD.encode(png)
+        );
     }
 }

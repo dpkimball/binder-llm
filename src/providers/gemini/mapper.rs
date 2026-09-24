@@ -16,6 +16,7 @@ pub fn generate_body(request: &ChatRequest, default_model: &str) -> Result<Value
     if request.messages.is_empty() {
         return Err(LlmError::invalid("chat request has no messages"));
     }
+    ChatMessage::reject_if_images(&request.messages)?;
     let mut system = Vec::new();
     let mut contents = Vec::new();
     for message in &request.messages {

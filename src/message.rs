@@ -7,6 +7,13 @@ use crate::tool::ToolCall;
 /// Arbitrary provider-neutral metadata. Never used for secrets.
 pub type Metadata = BTreeMap<String, serde_json::Value>;
 
+/// Image bytes attached to a user message. Encoding for a provider stays in that provider.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct ChatImage {
+    pub media_type: String,
+    pub bytes: Vec<u8>,
+}
+
 /// Chat turn role.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -28,6 +35,8 @@ pub enum ChatMessage {
     },
     User {
         content: String,
+        #[serde(default, skip_serializing_if = "Vec::is_empty")]
+        images: Vec<ChatImage>,
         #[serde(default)]
         metadata: Metadata,
     },
@@ -55,8 +64,13 @@ impl ChatMessage {
     }
 
     pub fn user(content: impl Into<String>) -> Self {
+        Self::user_with_images(content, Vec::new())
+    }
+
+    pub fn user_with_images(content: impl Into<String>, images: Vec<ChatImage>) -> Self {
         Self::User {
             content: content.into(),
+            images,
             metadata: Metadata::new(),
         }
     }
@@ -91,6 +105,23 @@ impl ChatMessage {
             Self::User { .. } => Role::User,
             Self::Assistant { .. } => Role::Assistant,
             Self::Tool { .. } => Role::Tool,
+        }
+    }
+
+    pub fn reject_if_images(messages: &[ChatMessage]) -> crate::error::Result<()> {
+        if messages.iter().any(|message| !message.images().is_empty()) {
+            Err(crate::error::LlmError::unsupported(
+                "this provider does not accept images",
+            ))
+        } else {
+            Ok(())
+        }
+    }
+
+    pub fn images(&self) -> &[ChatImage] {
+        match self {
+            Self::User { images, .. } => images,
+            _ => &[],
         }
     }
 

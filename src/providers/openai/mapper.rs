@@ -13,6 +13,7 @@ pub fn responses_body(request: &ChatRequest, default_model: &str) -> Result<Valu
     if request.messages.is_empty() {
         return Err(LlmError::invalid("chat request has no messages"));
     }
+    ChatMessage::reject_if_images(&request.messages)?;
     let mut instructions = Vec::new();
     let mut input = Vec::new();
     for message in &request.messages {
