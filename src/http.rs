@@ -211,14 +211,13 @@ pub fn join_url(base: &str, path: &str) -> String {
 }
 
 pub fn map_reqwest(err: reqwest::Error) -> LlmError {
+    let err = err.without_url();
     if err.is_timeout() {
         LlmError::Timeout
-    } else if err.is_connect() {
-        LlmError::connection(err.without_url().to_string())
     } else if err.is_body() || err.is_decode() {
-        LlmError::serialization(err.without_url().to_string())
+        LlmError::serialization(sanitize_error_message(err.to_string()))
     } else {
-        LlmError::connection(err.without_url().to_string())
+        LlmError::connection(sanitize_error_message(err.to_string()))
     }
 }
 
@@ -227,7 +226,9 @@ fn parse_json_body<T: DeserializeOwned>(provider: Provider, status: u16, raw: &s
         if raw.trim().is_empty() {
             LlmError::provider(provider, "empty response body", Some(status))
         } else {
-            LlmError::serialization(format!("failed to decode provider JSON: {e}"))
+            LlmError::serialization(sanitize_error_message(format!(
+                "failed to decode provider JSON: {e}"
+            )))
         }
     })
 }
@@ -326,6 +327,19 @@ pub fn response_lines(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn provider_error_body_drops_credentials() {
+        let err = error_from_body(
+            Provider::Openai,
+            401,
+            r#"{"error":{"message":"invalid Bearer sk-liveSECRETvalue123"}}"#,
+        );
+        let text = err.to_string();
+        assert!(!text.contains("sk-liveSECRETvalue123"));
+        assert!(!text.contains("liveSECRET"));
+        assert!(text.contains("[redacted]"));
+    }
 
     #[test]
     fn join_url_strips_slashes() {

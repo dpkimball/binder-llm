@@ -66,23 +66,25 @@ Consumers should depend on `LlmClient` and the provider-neutral request/response
 
 ## Develop
 
-Sibling checkout with shared build tooling (optional):
-
-```text
-workspace/
-  dpk-build/   # or any BUILD_ROOT that provides Makefile.common
-  binder-llm/
-```
-
 ```sh
-cargo test
-cargo test --all-features
-cargo clippy --all-targets --all-features -- -D warnings
-make b   # lint + test; publishes to private Kellnr when configured
+cargo fmt -- --check
+cargo clippy --locked --all-targets --all-features -- -D warnings
+cargo test --locked --all-features
 ```
 
-**Embed path:** private Kellnr (`publish = ["dpk"]`) — not crates.io.  
-**Public binary path:** tag `v*` → [`binder-llm-releases`](https://github.com/dpkimball/binder-llm-releases). See [`docs/specs/private-source-public-binary.md`](docs/specs/private-source-public-binary.md).
+Provider credentials come from the environment (`OPENAI_API_KEY`, and the matching variable for each other provider). Tests use mock servers and do not need real keys.
+
+Depend on a git revision when the crate is not published to crates.io:
+
+```toml
+binder-llm = { git = "https://github.com/dpkimball/binder-llm", tag = "v0.1.0" }
+```
+
+Enable providers with feature flags (`ollama` is default). See the table above.
+
+`make b` publishes to the private Kellnr registry (`publish = ["dpk"]`). That registry is an internal publishing path, not required to build or to depend on the git repository.
+
+**Public binary path:** tag `v*` → [`binder-llm-releases`](https://github.com/dpkimball/binder-llm-releases).
 
 ## Out of scope
 
@@ -90,4 +92,4 @@ Prompt templates, agents, planning, memory, vector search, RAG, MCP, GitHub inte
 
 ## License
 
-See repository license / parent workspace policy.
+MIT. See [LICENSE](LICENSE).

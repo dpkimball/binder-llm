@@ -1,9 +1,9 @@
 ---
 id: private-source-public-binary
 title: binder-llm — private source / public binary distribution
-status: draft
+status: superseded
 created: 2026-09-02
-updated: 2026-09-02
+updated: 2026-10-05
 owner: binder-llm
 github_issue: https://github.com/dpkimball/binder-llm/issues/6
 related:
@@ -13,6 +13,8 @@ related:
 ---
 
 # binder-llm — private source / public binary distribution
+
+> **Superseded for source licensing.** The source repository is MIT (`LICENSE`). This document describes the earlier private-source / public-binary channel. The readiness checklist lives in the codeintel repo at `docs/public-release-readiness.md`.
 
 ## Purpose
 
