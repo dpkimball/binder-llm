@@ -4,7 +4,8 @@ binder-llm
 Official compiled release of binder-llm.
 
 binder-llm is a provider-agnostic LLM transport library. This archive contains
-the public executable for install/verify only. Source is privately maintained.
+the compiled executable. Source is MIT licensed in
+https://github.com/dpkimball/binder-llm.
 
 IMPORTANT
 ---------
@@ -35,7 +36,7 @@ https://github.com/dpkimball/binder-llm-releases
 License
 -------
 
-See LICENSE.txt in this archive. Proprietary binary distribution — not OSS.
+See LICENSE.txt in this archive (MIT).
 
 Support
 -------
