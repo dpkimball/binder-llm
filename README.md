@@ -96,7 +96,7 @@ Prompt templates, agents, planning, memory, vector search, RAG, MCP, GitHub inte
 
 ## Contributing
 
-Pull requests are not accepted. Fork the repository to keep your own changes. Open an issue for bugs or suggestions. Security reports go through [GitHub Security Advisories](https://github.com/dpkimball/binder-llm/security/advisories/new). See [SECURITY.md](SECURITY.md).
+Issues and pull requests are welcome. The maintainer reviews pull requests and merges the ones that land. Security reports go through [GitHub Security Advisories](https://github.com/dpkimball/binder-llm/security/advisories/new). See [SECURITY.md](SECURITY.md).
 
 ## License
 
