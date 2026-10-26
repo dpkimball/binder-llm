@@ -90,6 +90,14 @@ Enable providers with feature flags (`ollama` is default). See the table above.
 
 Prompt templates, agents, planning, memory, vector search, RAG, MCP, GitHub integration, tool execution, workflow orchestration, conversation persistence.
 
+## Stability
+
+0.1.x. Provider request and response types can change before 1.0. Pin a git tag or commit in downstream crates.
+
+## Contributing
+
+Issues and pull requests are welcome. Security reports go through [GitHub Security Advisories](https://github.com/dpkimball/binder-llm/security/advisories/new). See [SECURITY.md](SECURITY.md).
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
